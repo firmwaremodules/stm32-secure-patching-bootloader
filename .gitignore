@@ -1,0 +1,5 @@
+# stm32-secure-patching-bootloader
+
+## Prepareimage Python cache directory and compiled files
+__pycache__
+

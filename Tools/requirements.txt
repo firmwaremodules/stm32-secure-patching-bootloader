@@ -1,0 +1,5 @@
+pycryptodome
+pycryptodomex
+ecdsa
+pyelftools
+intelhex
