@@ -63,7 +63,7 @@ So what does MultiSegment mean to you?  It means you can build and deploy your 4
 offers a huge benefit for large applications. Imagine changing only functionality or fixing a bug in your 16 MB combined application.  With delta patching, only the difference - the .sfbp patch file - needs to be distributed to your customers and/or devices in the field, potentially a few hundred to few thousand bytes.  If you had to distribute this over a wireless link think of the savings in bandwidth and cost and time you would realize!
 The stm32-secure-patching-bootloader's USB flash drive update feature is also a great way to update devices in the field with patches or full images - after all, GUI devices are built for human interaction and often don't necessarily have wireless links but may have an exposed USB port.
 
-See this [MultiSegment Graphic](stm32-secure-patching-bootloader-MultiSegment_rev1_Dec2021.pdf) illustrating slot placement.
+See this [MultiSegment Graphic](Docs/stm32-secure-patching-bootloader-MultiSegment_rev1_Dec2021.pdf) illustrating slot placement.
 
 
 
