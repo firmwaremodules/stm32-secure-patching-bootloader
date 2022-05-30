@@ -51,17 +51,34 @@ typedef enum
 } SE_StatusTypeDef;
 
 /*!
-* Provides services for applications to call bootloader services including
-* updating firmware with the content of .sfb or .sfbp files.
+* Provides services for applications to update firmware in accordance with
+* the Firmware Modules' Application Management and Deployment Model.
 *
-* Patching Engine APIs will NOT update firmware to older versions.  If an older version (i.e. a 'downgrade')
+* The application (APP) and manufacturing test application (MTA) sections in
+* the target non-volatile storage may be updated by presenting an update firmware
+* image that was generated with FM_Release.  The Update module takes care of
+* choosing the correct APP section (APP1 or APP2) so as to support over-the-air
+* streaming firmware updating that is highly tolerant to link or device failure -
+* the target device's running application remains safe at all times during this
+* process.
+*
+* Update APIs will NOT update firmware to older versions.  If an older version (i.e. a 'downgrade')
 * is required, the changes must be reverted/implemented then built with a new version number.
-* The bootloader uses only the version number to determine whether a firmwre update
-* is necessary based on the content in SLOTs 0 and 1.
+* The Update and AMDM system uses only the version number to determine which application
+* to boot and which application to overwrite when updating.
 *
-* The Patching Engine applies data as it is provided with the Data() method. 
-* The supplied file (.sfb or .sfbp) can only be verified after a minimum number
-* of bytes is received - equal to the header (128 bytes for .sfb, 256 for .sfbp).
+* The Update module does not maintain its own RAM buffer but rather utilizes
+* the buffers provided by existing packet transport infrastructure.  The only
+* requirement on these buffers is that the *first* buffer provided must contain
+* at least {@link #getMinUpdateImageDataLen} bytes.  This value is platform
+* dependent, therefore transport buffer sizing must take this value into account as well.
+* The first buffer must contain enough bytes to verify that a firmware image is
+* indeed being supplied to the update engine.  The actual firmware image length is
+* extracted from the content of the first buffer supplied to {@link #data}.
+*
+* @a(Security Policies)
+* It is strongly advised to use a secure transport for data (for both commands and firmware images)
+* provided over the air to the APIs in this module.
 *
 * @a(Thread Safety)
 * The APIs in this module are NOT thread-safe
@@ -129,9 +146,9 @@ typedef enum
 
 
 /*!
- * High-level Patching Engine image types.
+ * High-level AMDM image types.
  *
- * These are the types of firmware images that may be presented to the Patching Engine.
+ * These are the types of firmware images that may be presented to the Update module.
  */
 typedef enum
 {
@@ -142,9 +159,8 @@ typedef enum
 
 
 /*! Set the delay type to COMMAND to specify rebooting upon command.
- *  The application is responsible for marking the update as "ready to install"
- * by invoking SE_PATCH_InstallAtNextReset at some later time.
- */
+ *  The application is responsible for marking the update as "ready to install".
+*/
 #define SE_PATCH_RebootDelay_COMMAND         ((uint32_t)0xFFFF)
 
 /*! Set the delay type to IMMEDIATE to specify rebooting and installing immediately.
@@ -157,7 +173,7 @@ typedef enum
 #define SE_PATCH_RebootDelay_NEXT            ((uint32_t)1)
 
 /*!
-* Patching Engine setup data structure.
+* Update start setup data structure.
 *
 * @field(type) Target update location of firmware image presented to Update module.
 *              This field may be set if known, or may be omitted (set to NONE) to use the firmware update image's
@@ -165,9 +181,9 @@ typedef enum
 * @field(rebootDelay) Specify the reboot delay that is to occur after a completed firmware update.
 *                     @p(blist)
 *                     - RebootDelay_IMMEDIATE  reboot immediately upon successful written image verification.
-*                     - 1 to 0xFFFE random delay, in seconds, selected from within this window before rebooting as if RebootDelay_IMMEDIATE was selected [currently unsupported].
+*                     - 1 to 0xFFFE random delay, in seconds, selected from within this window before rebooting as if RebootDelay_IMMEDIATE was selected.
 *                     - RebootDelay_COMMAND wait indefinately upon successful written image verification.
-*                       The user is responsible for rebooting the system, e.g. by calling NVIC_SystemReset().
+*                       The user is responsible for rebooting the system, e.g. by calling {@link fm.driver.System#reset}.
 *                     @p
 * @field(totalLength) Provide if the image length is known - only used to initially reject an update if it is too large
 *                     for the device before examining the actual header. Set to 0 to ignore this first check and use the
@@ -280,13 +296,11 @@ SE_ErrorStatus SE_PATCH_Init(SE_PATCH_Status* p_PatchStatus, const SE_PATCH_Star
 * No action is taken against the non-volatile storage unless the provided
 * data was verified to contain the start of a valid firmware image.
 *
-* There is a requirement for data ordering - all subsequent bytes of the
+* There is a requirement for data ordering - the first
+* {@link #getMinUpdateImageDataLen} bytes must be sent first and available as a unit
+* to the `data` function.  These bytes contain enough information for the updater
+* to make a decision on whether to proceed.  All subsequent bytes of the
 * firmware update image must also be delivered in order.
-* 
-* There is no requirement on the number of bytes that must be delivered per invocation.
-* As little as 1 byte can be provided each time. Internal buffering is used to accumulate
-* enough bytes for header verification (128 for .sfb, 256 for .sfbp) before continuing
-* with the update or rejecting it.
 *
 * Additionally, the count of bytes is accumulated until the expected number
 * of bytes is received, at which time the written firmware image will be fully verified.
@@ -373,7 +387,7 @@ SE_ErrorStatus SE_PATCH_Poll(SE_PATCH_Status* status);
 /*!
 * Get a string discription of the specified status code.
 * Return string, or empty string if code has no string
-* or strings were not compiled in.
+* or strings no compiled in.
 */
 const char* SE_PATCH_GetStatusCodeString(SE_PATCH_StatusCode code);
 
@@ -394,9 +408,7 @@ typedef struct
     uint8_t  ActiveFwTag[SE_TAG_LEN];    /*!< Firmware Tag*/
 } SE_APP_ActiveFwInfo;
 
-/* The following supports the automatic git semantic versioning system available with stm32-secure-patching-bootloader.
- *
- * Extract version components "major", "minor" and "patch" from the 32-bit version field.
+/* Extract version components "major", "minor" and "patch" from the 32-bit version field.
  * The version field should contain a value formatted such that major is the high bytes; minor is the middle short and
  * patch is the low byte.
  * Without any explicit formatting of this field, the version numbers will simply ramp

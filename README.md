@@ -25,16 +25,17 @@ Refer to details in [Product Documentation](Docs/README.md).
 
 ### Supported Boards
 
-This list will grow over time as we work to cover the entire spectrum of STM32 NUCLEO, DISCO and EVAL boards.  Note that we group -DISCO, -Discovery and -DK  as just `DISCO`.
+This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVAL and 3rd-party boards.  Note that we group -DISCO, -Discovery and -DK  as just `DISCO`.
 
-| Board |
-| --- |
-| NUCLEO-L073RZ |
-| NUCLEO-F429ZI |
-| DISCO-L496G | 
-| DISCO-F769I |
+| Family | Boards |  |
+| --- | --- | --- |
+| STM32L0 | NUCLEO-L073RZ B-L072Z-LRWAN1 |
+| STM32L4 | DISCO-L496G | 
+| STM32WL | LORA-E5-DEV | *NEW* works on LORA-E5-MINI too |
+| STM32F4 | NUCLEO-F429ZI |
+| STM32F7 | DISCO-F769I |
 
-Please post an issue if you'd like a particular NUCLEO, DISCO or EVAL board supported.
+Please post an issue if you'd like a particular board supported.
 
 ### Delta Patch Engine
 
@@ -54,6 +55,7 @@ The MultiSegment feature solves the problem of how to update monolithic applicat
 
 This problem is common with GUI systems where you might find a 300 KB firmware application coupled with 4 MB of GUI assets like images and videos and fonts etc. In advanced GUI systems like TouchGFx, these assets are accessed through regular MCU memory read instructions and must therefore be available in a program-readable memory region.
 Since internal flash (at 0x0800 0000) is not large enough to hold all of these assets, a memory region dedicated to an external flash through the Q/OSPI peripheral on STM32 devices is used.  This region is typically assigned to 0x9000 0000.  
+
 The application's linker script contains a section definition located at 0x9000 0000 to which all GUI assets are placed at link time.  The resultant .hex file remains compact because it contains just the data along with addresses to be written. 
 Loading this .hex file with an external-flash-aware programmer like STM32CubeProgrammer works fine, but you do not have a bootloader nor capability to update your application and GUI assets in the field.
 
@@ -66,7 +68,19 @@ The stm32-secure-patching-bootloader's USB flash drive update feature is also a 
 See this [MultiSegment Graphic](Docs/stm32-secure-patching-bootloader-MultiSegment_rev1_Dec2021.pdf) illustrating slot placement.
 
 
+### Release Notes
 
+**v1.1.0  - May 2022**
+
+* Adds new platform support for STM32WLE5 and SeeedStudio LORA-E5-DEV and LORA-E5-MINI boards.   
+* Adds specific support for the B-L072Z-LRWAN1 board. 
+* Adds README to each library package to describe flash layout and bootloader configuration. 
+* Changes postbuild command to allow user to specify location of bootloader Libs directory. 
+* Removes vector offset and multiseg address parameters in the postbuild command script (these are now defined in the bootloader library package artifacts). 
+
+**v1.0.0 - Dec 2021**
+
+* Initial Release 
 
 
 

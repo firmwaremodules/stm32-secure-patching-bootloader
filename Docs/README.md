@@ -3,7 +3,7 @@
 ## Documentation Overview
 
 * [Graphic](stm32-secure-patching-bootloader-MultiSegment_rev1_Dec2021.pdf) describing MultiSegment feature in more detail.
-* [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev1_Dec2021.pdf) in PDF form with screenshots.
+* [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev2_May2022.pdf) in PDF form with screenshots.
 
 ## Quick Start Guide
 
@@ -11,7 +11,7 @@ Integrating the stm32-secure-patching-bootloader is a simple four step process: 
 
 Please refer to [stm32-secure-patching-bootloader-demoapp](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) repository for working projects already implementing these steps.
 
-Also refer to this [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev1_Dec2021.pdf) PDF document for more details including images and screenshots.
+Also refer to this [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev2_May2022.pdf) PDF document for more details including images and screenshots.
 
 1. Adding bootloader files to your project repository
 
@@ -27,33 +27,31 @@ We need to add the postbuild command line, update the include and linker paths, 
   * Update Post-build steps C/C++ Build -> Settings -> Build Steps  
   
 ```
-"../../../../../../../Bootloader/Scripts/STM32CubeIDE/postbuild.sh" "${BuildArtifactFileBaseName}" "../../Keys" "../../../../../Binary" "1.0.0" "1.0.0" "NUCLEO-L073RZ" "1.0.0" 512 0
- |                                                                   |                              |           |                       |       |       |               |       |   |
- \- Name of postbuild script, relative to build dir                  |                              |           |                       |       |       |               |       |   |
-                                                                     |                              |           |                       |       |       |               |       |   |
-                                                                     \- Name of applcation build artifact (Build Artifact -> Artifact Name)     |       |               |       |   |
-                                                                                                    |           |                       |       |       |               |       |   |
-                                                                                                    \- Directory where Keys are, relative to build dir, according to DemoApp reference design.
-                                                                                                                |                       |       |       |               |       |   |
+"../../../../../../../Bootloader/Scripts/STM32CubeIDE/postbuild.sh" "${BuildArtifactFileBaseName}" "../../Keys" "../../../../../Binary" "../../../../../../../Bootloader/Libs"  "1.0.0" "1.0.0" "NUCLEO-L073RZ" "v1.1.0"
+ |                                                                   |                              |           |                       |                                       |       |       |               |      
+ \- Name of postbuild script, relative to build dir                  |                              |           |                       |                                       |       |       |               |      
+                                                                     |                              |           |                       |                                       |       |       |               |      
+                                                                     \- Name of applcation build artifact (Build Artifact -> Artifact Name)                                     |       |       |               |      
+                                                                                                    |           |                       |                                       |       |       |               |      
+                                                                                                    \- Directory where Keys are, relative to build dir, according to DemoApp reference design.  |               |
+                                                                                                                |                       |                                       |       |       |               |      
                                                                                                                 \- Directory where Outputs are placed and patch reference binaries are found, relative to build dir, according to DemoApp reference design. 
-                                                                                                                                        |       |       |               |       |   |
-                                                                                                                                        \- 'To' version (version to build)      |   |
-                                                                                                                                                |       |               |       |   |
-                                                                                                                                                \- 'From' version (reference for patch generation)
-                                                                                                                                                        |               |       |   |
-                                                                                                                                                        \- bootloader library to link with (in Libs dir)
-                                                                                                                                                                        |       |   |
-                                                                                                                                                                        \- Version of bootloader library to link with (in Libs dir)
-                                                                                                                                                                                |   |
-                                                                                                                                                                                \- Board/target specific vector table offset size. 512 unless noted in board_config properties file.
-                                                                                                                                                                                    |
-                                                                                                                                                                                    \- MultiSegment start address. 0x90000000 typical or 0 if MultiSegment is not used.
+                                                                                                                                        |                                       |       |       |               |
+                                                                                                                                        \- Directory where bootloader libraries are, relative to build dir.     |
+                                                                                                                                                                                |       |       |               |      
+                                                                                                                                                                                \- 'To' version (version to build)     
+                                                                                                                                                                                        |       |               |      
+                                                                                                                                                                                        \- 'From' version (reference for patch generation)
+                                                                                                                                                                                                |               |      
+                                                                                                                                                                                                \- bootloader library to link with (in Libs dir)
+                                                                                                                                                                                                                |      
+                                                                                                                                                                                                                \- Version of bootloader library to link with (in Libs dir)
                                                                                                                                                                                     
 ```
 
   * Add path to bootloader include: C/C++ Build -> Settings -> MCU GCC Compiler -> Include paths : `../../../../../../../Bootloader/Include`
 
-  * Add paths and links to bootloader library files: C/C++ Build -> Settings -> MCU GCC Linker -> Libraries : (Libraries) `:stm32-secure-patching-bootloader-interface-gcc_NUCLEO-L073RZ_v1.0.0.o` (Library search paths) `../../../../../../../Bootloader/Libs/NUCLEO-L073RZ`
+  * Add paths and links to bootloader library files: C/C++ Build -> Settings -> MCU GCC Linker -> Libraries : (Libraries) `:stm32-secure-patching-bootloader-interface-gcc_NUCLEO-L073RZ_v1.1.0.o` (Library search paths) `../../../../../../../Bootloader/Libs/NUCLEO-L073RZ`
 
   * Add paths to bootloader linker files: C/C++ Build -> Settings -> MCU GCC Linker -> Miscellaneous : `-Xlinker -L ../../../../../../../Bootloader/Libs/NUCLEO-L073RZ -L ../../../../../../../Bootloader/Linker`
 

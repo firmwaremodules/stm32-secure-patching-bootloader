@@ -17,7 +17,7 @@
 #
 
 #
-# Copyright (c) 2021 Firmware Modules Inc.
+# Copyright (c) 2021-2022 Firmware Modules Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files(the "Software"), to deal
@@ -45,12 +45,11 @@
 #  arg1 - Name of application input .elf file  example: "${BuildArtifactFileBaseName}.elf"
 #  arg2 - Keys directory relative to build directory.  example:  "../../Keys"
 #  arg3 - Binary directory relative to build directory.  example: "../../../../../Binary"
-#  arg4 - Build version (0 or 0.0.0 for auto version)
-#  arg5 - Patch reference version (if not found, no patch generated)
-#  arg6 - Board name (e.g. NUCLEO-L073RZ)
-#  arg7 - Bootloader version (e.g. 1.0.0)
-#  arg8 - Vector table offset from the slot base for the platform (e.g. 512) Cannot be 0.
-#  arg9   Multisegment address (e.g. 0x90000000 if used, or 0 if not used)
+#  arg4 - Libs directory relative to the build directory.  example: "../../../../../../../Bootloader/Libs"
+#  arg5 - Build version (0 or 0.0.0 for auto version)
+#  arg6 - Patch reference version (if not found, no patch generated)
+#  arg7 - Board name (e.g. NUCLEO-L073RZ)
+#  arg8 - Bootloader version (e.g. 1.0.0)
 
 # If you are following the project structure outlined in the demonstration application:
 #
@@ -59,6 +58,7 @@
 #
 #  arg2 is "../../Keys"
 #  arg3 is "../../../../../Binary"
+#  arg4 is "../../../../../../../Bootloader/Libs"
 #
 #    |- Project\
 #    |    |- Binary\
@@ -71,12 +71,10 @@
 #                           
 
 ApplicationName=$1
-BuildVer=$4
-PatchRefVer=$5
-BoardName=$6
-BootVer=$7
-VectOffset=$8
-MultiSegAddr=$9
+BuildVer=$5
+PatchRefVer=$6
+BoardName=$7
+BootVer=$8
 
 # Setup references to the stm32-secure-patching-bootloader inputs
 # Path to *this* script is derived from the name.
@@ -84,8 +82,6 @@ MultiSegAddr=$9
 ScriptDir=$(realpath $(dirname "$0"))
 # We need reference to the Tools dir
 ToolsDir=$(realpath $ScriptDir/../../Tools)
-# We need reference to the Libs dir
-LibsDir=$(realpath $ScriptDir/../../Libs)
 
 # Setup references to the application project inputs and outputs
 BuildDir=`pwd`
@@ -93,6 +89,15 @@ BuildDir=`pwd`
 KeysDir=$(realpath $BuildDir/$2)
 # We need reference to the output products directory
 BinaryDir=$(realpath $BuildDir/$3)
+# We need reference to the Libs dir
+LibsDir=$(realpath $BuildDir/$4)
+
+ret=$?
+
+if [ $ret != 0 ]; then
+    echo "Fatal error in postbuild arguments."
+    exit 1
+fi
 
 OutputDump=$BuildDir/output.txt
 
@@ -118,16 +123,23 @@ if [ ! -e $BinaryDir ]; then
     echo "FATAL: BinaryDir "$BinaryDir" is not found."
     exit 1
 fi
-if [ $VectOffset == 0 ]; then
-    echo "FATAL: VectOffset is not defined."
-    exit 1
-fi
 if [ -z ${BootVer+x} ]; then
     echo "FATAL: BootVer is not defined."
     exit 1
 fi
 if [ -z ${BoardName+x} ]; then
     echo "FATAL: BoardName is not defined."
+    exit 1
+fi
+
+# Inclulde the board properties file:
+# VectOffset
+# MultiSegAddr
+Stm32BootBoardPostbuildName=${LibsDir}/${BoardName}/"stm32-secure-patching-bootloader-postbuild_"$BoardName"_"$BootVer".sh"
+source ${Stm32BootBoardPostbuildName}
+
+if [ $VectOffset == 0 ]; then
+    echo "FATAL: VectOffset is not defined."
     exit 1
 fi
 
