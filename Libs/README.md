@@ -8,8 +8,8 @@ In the `Libs` directory you will find the three key files needed by your applica
 2. `stm32-secure-patching-bootloader-interface-gcc_<BOARD>_<version>.o` : bootloader interface library to be linked with your application.
 3. `stm32-secure-patching-bootloader-linker-gcc_<BOARD>_<version>.ld` : application linker script configuration definitions.
 
-The capabilities built into the stm32-secure-patching-bootloader are dependent on the board it is targeting.  For example, on boards that support USB host, the ability to update from USB flash drives has been integrated and enabled.  
-On boards that offer external flash, the multi-segment feature has been enabled to allow placement of a portion of SLOT0 and all of SLOT1 in external flash.
+The capabilities built into the stm32-secure-patching-bootloader are dependent on the board it is targeting.  For example, on boards that support USB host, the ability to update from USB flash drives may have been integrated and enabled.  
+On boards that offer external flash, the multi-segment feature may have been enabled to allow placement of a portion of SLOT0 and all of SLOT1 in external flash.
 
 
 

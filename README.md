@@ -1,9 +1,9 @@
 ## STM32 Secure Patching Bootloader
-A Secure Patching Bootloader and Firmware Update System for **STM32** MCUs.
+A Secure Patching Bootloader and Firmware Update System for all **STM32** MCUs.
 
 The only bootloader and firmware update system you may ever need.  Works with almost any STM32 MCU family using the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) development environment.
 
-This unique solution is an easy way to get a secure and robust bootloader that offers multiple firmware update methods built-in, including delta patching.  It is a plug'n'play system that requires no configuration and just works!
+This unique solution is an easy way to get a secure and robust bootloader that offers multiple firmware update methods built-in, including delta patching.  It is a **plug'n'play** system that requires no configuration and just works!
 
 **Features:**
 
@@ -14,9 +14,12 @@ This unique solution is an easy way to get a secure and robust bootloader that o
 * Firmware delta patching engine built-in and is accessible by both the bootloader and the application at runtime for powerful OTA delta updates.
 * Multiple secure firmware update methods from bootloader: YMODEM over UART, USB flash drive (where available).
 * Optional automatic 'git' semantic versioning support: automatically version your application firmware end-to-end with git repository tags.
-* Progress messages printed to UART.
+* Useful progress messages printed to UART.
 
-This secure patching bootloader and firmware update system is MIT licensed and free to use on any NUCLEO, DISCO or EVAL board we support here. If your NUCLEO, DISCO or EVAL board is missing, post an issue and we'll add it.
+This secure patching bootloader and firmware update system is Apache and MIT licensed and free to use on any NUCLEO, DISCO or EVAL board we support here. If your NUCLEO, DISCO or EVAL board is missing, post an issue and we'll add it.
+
+The stm32-secure-patching-bootloader reserves between **40 - 80 KB** at the beginning of internal flash, depending on MCU and feature selected (support for USB flash loader, external flash / multisegment add to size).
+The bootloader also reserves about **5 KB** at the start of SRAM for the secure patching engine's stack and state, fully indepdenent of the application.  This allows the application to perform in-application firmware updates and make other runtime requests of the bootloader (get firmware version, etc).
 
 ### Quick Start Guide
 
@@ -27,13 +30,20 @@ Refer to details in [Product Documentation](Docs/README.md).
 
 This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVAL and 3rd-party boards.  Note that we group -DISCO, -Discovery and -DK  as just `DISCO`.
 
-| Family | Boards |  |
+| Family | Boards | Product Page |
 | --- | --- | --- |
-| STM32L0 | NUCLEO-L073RZ B-L072Z-LRWAN1 |
-| STM32L4 | DISCO-L496G | 
-| STM32WL | LORA-E5-DEV | *NEW* works on LORA-E5-MINI too |
-| STM32F4 | NUCLEO-F429ZI |
-| STM32F7 | DISCO-F769I |
+| STM32L0 | NUCLEO-L073RZ | [link](https://www.st.com/en/evaluation-tools/nucleo-l073rz.html) |
+|         | B-L072Z-LRWAN1 | [link](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) |
+| STM32L4 | NUCLEO-L412KB | [link](https://www.st.com/en/evaluation-tools/nucleo-l412kb.html) |
+|         | NUCLEO-L452RE | [link](https://www.st.com/en/evaluation-tools/nucleo-l452re.html) |
+|         | NUCLEO-L496G | [link](https://www.st.com/en/evaluation-tools/nucleo-l496zg.html) |
+|         | DISCO-L476G | [link](https://www.st.com/en/evaluation-tools/32l476gdiscovery.html) |
+|         | DISCO-L496G | [link](https://www.st.com/en/evaluation-tools/32l496gdiscovery.html) |
+| STM32WL | LORA-E5-DEV | [link](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) |
+|         | LORA-E5-MINI (use DEV libs) | [link](https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869) |
+| STM32F4 | NUCLEO-F429ZI | [link](https://www.st.com/en/evaluation-tools/nucleo-f429zi.html) |
+| STM32F7 | DISCO-F769I | [link](https://www.st.com/en/evaluation-tools/32f769idiscovery.html) |
+
 
 Please post an issue if you'd like a particular board supported.
 
@@ -67,8 +77,25 @@ The stm32-secure-patching-bootloader's USB flash drive update feature is also a 
 
 See this [MultiSegment Graphic](Docs/stm32-secure-patching-bootloader-MultiSegment_rev1_Dec2021.pdf) illustrating slot placement.
 
+_Since you've read this far:_
+
+I will happily make modifications to the stm32-secure-patching-bootloader to support commercial projects on custom hardware.
+Please head over to my [store](https://www.firmwaremodules.com/products/stm32-secure-patching-bootloader) to get pricing details.
+[Contact me](mailto:contact@firmwaremodules.com) to get the ball rolling.
+
+Commercial, registered users get an additional **production** version of the bootloader binary that checks and enforces **RDP Level 2**
+to help mitigate chip-level attacks such as [RDP regression](https://www.usenix.org/system/files/conference/woot17/woot17-paper-obermaier.pdf).  Your use of the production version is optional.  When utilized, it will
+automatically set RDP Level 2 and write protect the bootloader flash area at startup.
 
 ### Release Notes
+
+**v1.2.0  - Aug 2022**
+
+* Adds support for four new STM32L4 family dev boards.
+* Adds runtime API to get bootloader version string from application.
+* Enables USB flash drive update on DISCO-L496G.
+* Updates API interface documentation in `stm32_secure_patching_bootloader_interface_v1.2.0.h`
+* Adds test binaries for each board under `Test/<BOARD>` directory. Allows for quick validation of bootloader board support and evaluation of the firmware update process.
 
 **v1.1.0  - May 2022**
 

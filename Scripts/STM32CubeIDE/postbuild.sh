@@ -53,8 +53,8 @@
 
 # If you are following the project structure outlined in the demonstration application:
 #
-# Postbuild command is "../../../../../../../Bootloader/Scripts/STM32CubeIDE/postbuild.sh" "${BuildArtifactFileBaseName}" "../../Keys" "../../../../../Binary" "1.0.0" "1.0.0" "NUCLEO-L073RZ" "1.0.0" 512 0
-#                                                                                                                                                               Build   Patch    Board          BootVer Vect MultiSeg          
+# Postbuild command is "../../../../../../../Bootloader/Scripts/STM32CubeIDE/postbuild.sh" "${BuildArtifactFileBaseName}" "../../Keys" "../../../../../Binary" "1.0.0" "1.0.0" "NUCLEO-L073RZ" "1.0.0"
+#                                                                                                                                                               Build   Patch    Board          BootVer
 #
 #  arg2 is "../../Keys"
 #  arg3 is "../../../../../Binary"
@@ -213,8 +213,6 @@ extract_version_number() {
       MAJOR=`expr $digitstring : '\([0-9]*\)\.[0-9]*\.[0-9]*'`
       MINOR=`expr $digitstring : '[0-9]*\.\([0-9]*\)\.[0-9]*'`
       PATCH=`expr $digitstring : '[0-9]*\.[0-9]*\.\([0-9]*\)'`
-      VERSION_DIGITS="$MAJOR.$MINOR.$PATCH"
-      #echo "version digits=$VERSION_DIGITS"
       # Check if there is a commit number component
       commitstring=`expr $1 : '.*-\([0-9]*\)-'`
       if [ -n "$commitstring" ]; then
@@ -227,6 +225,8 @@ extract_version_number() {
       PATCH=$((PATCH & 0xFF))
       VERSION_NUMBER=$(($((MAJOR << 24)) + $((MINOR << 8)) + $((PATCH)))) 
       #echo "Version number=$VERSION_NUMBER"
+      VERSION_DIGITS="$MAJOR.$MINOR.$PATCH"
+      #echo "version digits=$VERSION_DIGITS"
       return 0
                  
     fi
