@@ -15,6 +15,7 @@ This unique solution is an easy way to get a secure and robust bootloader that o
 * Multiple secure firmware update methods from bootloader: YMODEM over UART, USB flash drive (where available).
 * Optional automatic 'git' semantic versioning support: automatically version your application firmware end-to-end with git repository tags.
 * Useful progress messages printed to UART.
+* Can deploy and update TouchGFX applications.
 
 This secure patching bootloader and firmware update system is Apache and MIT licensed and free to use on any NUCLEO, DISCO or EVAL board we support here. If your NUCLEO, DISCO or EVAL board is missing, post an issue and we'll add it.
 
@@ -59,7 +60,8 @@ The Delta Patch Engine is built into the bootloader and ready to be accessed by 
 * The patching engine API consists of just three functions (Init(), Data(), Finish()) described in one header file and implemented in one object file bound at link time.
 
 
-### MultiSegment
+### TouchGFX
+Yes! With the STM32 Secure Patching Bootloader you can deploy and update your TouchGFX application with assets on external flash as easily as any other.  We call this capability **MultiSegment**.
 
 The MultiSegment feature solves the problem of how to update monolithic applications that are larger than the device's internal flash, or equivalently, applications that that are linked to be executed in two disjoint flash regions - for example internal and external flash.
 
