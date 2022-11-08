@@ -1,4 +1,5 @@
 ## STM32 Secure Patching Bootloader
+
 A Secure Patching Bootloader and Firmware Update System for all **STM32** MCUs.
 
 The only bootloader and firmware update system you may ever need.  Works with almost any STM32 MCU family using the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) development environment.
@@ -11,7 +12,7 @@ This unique solution is an easy way to get a secure and robust bootloader that o
 * Secure: signed (ECDSA) and encrypted (AES) firmware update images (.sfb) and delta patches (.sfbp)
 * Optional support for download slot (SLOT1) in external flash.
 * Optional support for distributing active slot (SLOT0) firmware image over internal *and* external flash - known as *MultiSegment* capability - benefiting large applications like TouchGFx GUI systems that include assets that must be located in external flash.
-* Firmware delta patching engine built-in and is accessible by both the bootloader and the application at runtime for powerful OTA delta updates.
+* Firmware delta patching engine built-in and is accessible by both the bootloader and the application at runtime for powerful OTA delta updates over any update mode (cell, lorawan, ethernet, bluetooth, UART, what have you).
 * Multiple secure firmware update methods from bootloader: YMODEM over UART, USB flash drive (where available).
 * Optional automatic 'git' semantic versioning support: automatically version your application firmware end-to-end with git repository tags.
 * Useful progress messages printed to UART.
@@ -31,19 +32,22 @@ Refer to details in [Product Documentation](Docs/README.md).
 
 This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVAL and 3rd-party boards.  Note that we group -DISCO, -Discovery and -DK  as just `DISCO`.
 
-| Family | Boards | Product Page |
+| Family | Boards | Board Config |
 | --- | --- | --- |
-| STM32L0 | NUCLEO-L073RZ | [link](https://www.st.com/en/evaluation-tools/nucleo-l073rz.html) |
-|         | B-L072Z-LRWAN1 | [link](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) |
-| STM32L4 | NUCLEO-L412KB | [link](https://www.st.com/en/evaluation-tools/nucleo-l412kb.html) |
-|         | NUCLEO-L452RE | [link](https://www.st.com/en/evaluation-tools/nucleo-l452re.html) |
-|         | NUCLEO-L496G | [link](https://www.st.com/en/evaluation-tools/nucleo-l496zg.html) |
-|         | DISCO-L476G | [link](https://www.st.com/en/evaluation-tools/32l476gdiscovery.html) |
-|         | DISCO-L496G | [link](https://www.st.com/en/evaluation-tools/32l496gdiscovery.html) |
-| STM32WL | LORA-E5-DEV | [link](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) |
-|         | LORA-E5-MINI (use DEV libs) | [link](https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869) |
-| STM32F4 | NUCLEO-F429ZI | [link](https://www.st.com/en/evaluation-tools/nucleo-f429zi.html) |
-| STM32F7 | DISCO-F769I | [link](https://www.st.com/en/evaluation-tools/32f769idiscovery.html) |
+| STM32L0  | [NUCLEO-L073RZ](https://www.st.com/en/evaluation-tools/nucleo-l073rz.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L073RZ/stm32-secure-patching-bootloader-README_NUCLEO-L073RZ_v1.3.0) |
+|          | [B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L072Z-LRWAN1/stm32-secure-patching-bootloader-README_B-L072Z-LRWAN1_v1.3.0) |
+| STM32L4  | [NUCLEO-L412KB](https://www.st.com/en/evaluation-tools/nucleo-l412kb.html) |[README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L412KB/stm32-secure-patching-bootloader-README_NUCLEO-L412KB_v1.3.0) |
+|          | [NUCLEO-L452RE](https://www.st.com/en/evaluation-tools/nucleo-l452re.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L452RE/stm32-secure-patching-bootloader-README_NUCLEO-L452RE_v1.3.0) |
+|          | [NUCLEO-L496ZG](https://www.st.com/en/evaluation-tools/nucleo-l496zg.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L496ZG/stm32-secure-patching-bootloader-README_NUCLEO-L496ZG_v1.3.0) |
+|          | [DISCO-L476G](https://www.st.com/en/evaluation-tools/32l476gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L476G/stm32-secure-patching-bootloader-README_DISCO-L476G_v1.3.0) |
+|          | [DISCO-L496G](https://www.st.com/en/evaluation-tools/32l496gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L496G/stm32-secure-patching-bootloader-README_DISCO-L496G_v1.3.0) |
+| STM32L4+ | [DISCO-L4R9I](https://www.st.com/en/evaluation-tools/32l4r9idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) |
+|          | [B-L4S5I-IOT01A](https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L4S5I-IOT01A/stm32-secure-patching-bootloader-README_B-L4S5I-IOT01A_v1.3.0) |
+| STM32L5  | [DISCO-L562E](https://www.st.com/en/evaluation-tools/stm32l562e-dk.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L562E/stm32-secure-patching-bootloader-README_DISCO-L562E_v1.3.0) |
+| STM32WL  | [LORA-E5-DEV](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/LORA-E5-DEV/stm32-secure-patching-bootloader-README_LORA-E5-DEV_v1.3.0) |
+|          | [LORA-E5-MINI](https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869)  (use DEV libs) |
+| STM32F4  | [NUCLEO-F429ZI](https://www.st.com/en/evaluation-tools/nucleo-f429zi.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) |
+| STM32F7  | [DISCO-F769I](https://www.st.com/en/evaluation-tools/32f769idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-F769I/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) |
 
 
 Please post an issue if you'd like a particular board supported.
@@ -81,7 +85,7 @@ See this [MultiSegment Graphic](Docs/stm32-secure-patching-bootloader-MultiSegme
 
 _Since you've read this far:_
 
-I will happily make modifications to the stm32-secure-patching-bootloader to support commercial projects on custom hardware.
+I will happily generate a made-to-order registered version of the stm32-secure-patching-bootloader to support commercial projects on custom hardware.
 Please head over to my [store](https://www.firmwaremodules.com/products/stm32-secure-patching-bootloader) to get pricing details.
 [Contact me](mailto:contact@firmwaremodules.com) to get the ball rolling.
 
@@ -90,6 +94,13 @@ to help mitigate chip-level attacks such as [RDP regression](https://www.usenix.
 automatically set RDP Level 2 and write protect the bootloader flash area at startup.
 
 ### Release Notes
+
+**v1.3.0 - Nov 2022**
+
+* Now works with applications built using STM32CubeIDE 1.9 and later including version 1.10.1.  
+* Simplifies application integration process by removing the need to link with a library for access to SE_PATCH (in-application firmware update) APIs.  Now, the SE_PATCH engine APIs are available to all applications by default.  
+* Adds new platform support for STM32L4+ and DISCO-L4R9I and B-L4S5I-IOT01A boards. 
+* Adds new platform support for STM32L5 and the DISCO-L562E board. 
 
 **v1.2.0  - Aug 2022**
 
