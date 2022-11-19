@@ -32,8 +32,8 @@ Refer to details in [Product Documentation](Docs/README.md).
 
 This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVAL and 3rd-party boards.  Note that we group -DISCO, -Discovery and -DK  as just `DISCO`.
 
-| Family | Boards | Board Config |
-| --- | --- | --- |
+| Family | Boards | Board Config | Reference Projects |
+| --- | --- | --- | --- |
 | STM32L0  | [NUCLEO-L073RZ](https://www.st.com/en/evaluation-tools/nucleo-l073rz.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L073RZ/stm32-secure-patching-bootloader-README_NUCLEO-L073RZ_v1.3.0) |
 |          | [B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L072Z-LRWAN1/stm32-secure-patching-bootloader-README_B-L072Z-LRWAN1_v1.3.0) |
 | STM32L4  | [NUCLEO-L412KB](https://www.st.com/en/evaluation-tools/nucleo-l412kb.html) |[README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L412KB/stm32-secure-patching-bootloader-README_NUCLEO-L412KB_v1.3.0) |
@@ -41,7 +41,7 @@ This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVA
 |          | [NUCLEO-L496ZG](https://www.st.com/en/evaluation-tools/nucleo-l496zg.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L496ZG/stm32-secure-patching-bootloader-README_NUCLEO-L496ZG_v1.3.0) |
 |          | [DISCO-L476G](https://www.st.com/en/evaluation-tools/32l476gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L476G/stm32-secure-patching-bootloader-README_DISCO-L476G_v1.3.0) |
 |          | [DISCO-L496G](https://www.st.com/en/evaluation-tools/32l496gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L496G/stm32-secure-patching-bootloader-README_DISCO-L496G_v1.3.0) |
-| STM32L4+ | [DISCO-L4R9I](https://www.st.com/en/evaluation-tools/32l4r9idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) |
+| STM32L4+ | [DISCO-L4R9I](https://www.st.com/en/evaluation-tools/32l4r9idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) | [FreeRTOS_LowPower](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) |
 |          | [B-L4S5I-IOT01A](https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L4S5I-IOT01A/stm32-secure-patching-bootloader-README_B-L4S5I-IOT01A_v1.3.0) |
 | STM32L5  | [DISCO-L562E](https://www.st.com/en/evaluation-tools/stm32l562e-dk.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L562E/stm32-secure-patching-bootloader-README_DISCO-L562E_v1.3.0) |
 | STM32WL  | [LORA-E5-DEV](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/LORA-E5-DEV/stm32-secure-patching-bootloader-README_LORA-E5-DEV_v1.3.0) |
