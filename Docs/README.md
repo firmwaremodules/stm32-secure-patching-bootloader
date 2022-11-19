@@ -97,7 +97,7 @@ To your SECTIONS, add the following:
 
 ```
 
-A multi-target generic linker script that works with most STM32 targets is provided in the bootloader `Linker` directory.  See this [reference project linker script](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp/master/App/Project/DemoApp/NUCLEO-L073RZ/STM32CubeIDE/DemoApp_NUCLEO-L073RZ/STM32L073RZTx.ld).
+A multi-target generic linker script that works with most STM32 targets is provided in the bootloader `Linker` directory.  See this [reference project linker script](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp/tree/main/App/Project/DemoApp/NUCLEO-L073RZ/STM32CubeIDE/DemoApp_NUCLEO-L073RZ/STM32L073RZTx.ld).
 
 For a TouchGFx multi-segment application (assets on external QSPI or OSPI flash), use this template:
 
@@ -164,7 +164,7 @@ void SystemInit(void)
 
 ```
 
-5. Generating your project’s encryption and signing keys.
+5. Generating your projectÂ’s encryption and signing keys.
 
 Use the make_keys.bat script under Scripts to call a Python tool to generate the AES encryption key (firmware confidentiality) and the ECDSA public verification and private signing keys (firmware authenticity).   Example on Windows systems to place keys in a Keys directory: 
 
@@ -178,11 +178,11 @@ Making ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys/Signing_PrivKey_E
 
 Run `make_keys <path to directory to contain key files>`
 
-If you’re not using Windows, then all you need to do is look inside make_keys.bat and run the Python scripts directly.  The Keys directory is referenced by the postbuild.sh post-build command line in the IDE.  This directory can be anywhere and called anything by adjusting the post-build command line. 
+If youÂ’re not using Windows, then all you need to do is look inside make_keys.bat and run the Python scripts directly.  The Keys directory is referenced by the postbuild.sh post-build command line in the IDE.  This directory can be anywhere and called anything by adjusting the post-build command line. 
 
 **Important Note**
 
-These keys are also used by the bootloader to differentiate between compatible firmware loads!  That is, the stm32-secure-patching-bootloader will attempt to update to any firmware that is presented that can be successfully decrypted and signature verified. There is no “product ID” field in the header.  The keys are the product ID.  Of course, the point of having this type of security is to prevent loading of firmware except for those loads you explicitly authorize by way of signing during the build (automatically done by postbuild.bat).  But if you are running multiple products or even incompatible hardware revisions within the same product line, you must ensure to have unique keys setup for each STM32CubeIDE build project (the path to the keys is specified in the postbuild.sh post-build command line and in these examples is called Keys). 
+These keys are also used by the bootloader to differentiate between compatible firmware loads!  That is, the stm32-secure-patching-bootloader will attempt to update to any firmware that is presented that can be successfully decrypted and signature verified. There is no Â“product IDÂ” field in the header.  The keys are the product ID.  Of course, the point of having this type of security is to prevent loading of firmware except for those loads you explicitly authorize by way of signing during the build (automatically done by postbuild.bat).  But if you are running multiple products or even incompatible hardware revisions within the same product line, you must ensure to have unique keys setup for each STM32CubeIDE build project (the path to the keys is specified in the postbuild.sh post-build command line and in these examples is called Keys). 
 
 
 **That's it.**  There is a bit to do here, but all things considered it is pretty minimal and your application sources and build procedure is virtually untouched by the addition of the stm32-secure-patching-bootloader.
@@ -210,9 +210,9 @@ Update binaries are for distribution to customers or to your apps and cloud serv
   2. Secured in-field firmware full update file: `DemoApp_NUCLEO-L073RZ_v1.0.0.sfb` (full image) 
   3. Secured in-field firmware patch update file: `DemoApp_NUCLEO-L073RZ_v1.0.0_v1.1.0.sfbp` (patch - produced only if reference version v1.0.0 exists in `Binary\PatchRef`)
 
-Note: the `<version>` appended to the file names is a direct copy of either the post-build command-line's ‘to’ version, or else of the output of ‘git decribe –tags –always –dirty’ if the ‘to’ version is in auto mode “0.0.0” or “0”.  When using the auto mode (recommended), use git tagging to set the version.  A semantic version tag may be prepended with a ‘v’ or not.  Firmware Modules projects like to prepend versions with a ‘v’, so a tag might be ‘v1.3.1’.  Either way works. 
+Note: the `<version>` appended to the file names is a direct copy of either the post-build command-line's Â‘toÂ’ version, or else of the output of Â‘git decribe Â–tags Â–always Â–dirtyÂ’ if the Â‘toÂ’ version is in auto mode Â“0.0.0Â” or Â“0Â”.  When using the auto mode (recommended), use git tagging to set the version.  A semantic version tag may be prepended with a Â‘vÂ’ or not.  Firmware Modules projects like to prepend versions with a Â‘vÂ’, so a tag might be Â‘v1.3.1Â’.  Either way works. 
 
-Also note: the firmware image header contains a 4-byte field for version and therefore cannot directly accommodate a non-semantic version such as v1.3.1-7-gc32667a that may arise during development load testing.  The version generator embedded into the postbuild.sh script can safely handle this scenario by adding the “number of commits since” value to the build number, so v1.3.1-7 becomes 1.3.8 in the header. 
+Also note: the firmware image header contains a 4-byte field for version and therefore cannot directly accommodate a non-semantic version such as v1.3.1-7-gc32667a that may arise during development load testing.  The version generator embedded into the postbuild.sh script can safely handle this scenario by adding the Â“number of commits sinceÂ” value to the build number, so v1.3.1-7 becomes 1.3.8 in the header. 
 
 ### Notes
 
@@ -232,10 +232,10 @@ Also note: the firmware image header contains a 4-byte field for version and the
 
 * The stm32-secure-patching-bootloader strikes a balance between ease of integration, broad platform support and selection of security features that are enabled. 
 
-* The bootloader system is designed so that your products and firmware update files can be distributed into uncontrolled environments.  This means firmware confidentiality is ensured through AES encryption, and firmware and device integrity are ensured through ECDSA (digital signatures).  The AES encryption and the ECDSA public verification keys are stored in your device’s internal flash.  The AES encryption and ECDSA private signing key are typically stored in your firmware development repository (e.g. on GitHub, your developer’s and build PCs).  
+* The bootloader system is designed so that your products and firmware update files can be distributed into uncontrolled environments.  This means firmware confidentiality is ensured through AES encryption, and firmware and device integrity are ensured through ECDSA (digital signatures).  The AES encryption and the ECDSA public verification keys are stored in your deviceÂ’s internal flash.  The AES encryption and ECDSA private signing key are typically stored in your firmware development repository (e.g. on GitHub, your developerÂ’s and build PCs).  
 
 * Those that would attempt to undermine your products and solutions know that these keys exist.  Thus, protection of these keys is paramount.  You must create a root of trust on each of the devices you deploy by way of enabling RDP Level 2 through the stm32-secure-patching-bootloader production build (you get this build when you register the bootloader at firmwaremodules.com).  This build will automatically check and enable RDP Level 2 on each boot to help mitigate potential RDP regression attack vectors (yes these do exist).  Note that when RDP Level 2 is enabled, you permanently forfeit the ability to connect a debugger to your devices (a good thing when security is concerned). 
 
-* The bootloader system is not designed to protect your device and secrets from your own firmware application.  If you don’t trust your application or the way it works (e.g. you think it might offer a way for an attacker to read out contents of memory) then this bootloader system is not for you, or at least you must be aware that internal protections such as proprietary readout protection (PCROP) or firewalls are not implemented.  These are by no means foolproof even when enabled.  Don’t offer a command-line interface that has memory peek and poke commands. 
+* The bootloader system is not designed to protect your device and secrets from your own firmware application.  If you donÂ’t trust your application or the way it works (e.g. you think it might offer a way for an attacker to read out contents of memory) then this bootloader system is not for you, or at least you must be aware that internal protections such as proprietary readout protection (PCROP) or firewalls are not implemented.  These are by no means foolproof even when enabled.  DonÂ’t offer a command-line interface that has memory peek and poke commands. 
 
-* Finally, you should assume that if an attacker has physical access to your device and is determined enough (time and resources) then your secrets will eventually be extracted.  You need to weigh the expense and effort someone (or some group) would go to obtain your firmware update AES encryption key and public signature verification key, and the “payoff” that may be associated with that effort.   
+* Finally, you should assume that if an attacker has physical access to your device and is determined enough (time and resources) then your secrets will eventually be extracted.  You need to weigh the expense and effort someone (or some group) would go to obtain your firmware update AES encryption key and public signature verification key, and the Â“payoffÂ” that may be associated with that effort.   
