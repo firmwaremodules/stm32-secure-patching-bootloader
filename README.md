@@ -41,7 +41,7 @@ This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVA
 |          | [NUCLEO-L496ZG](https://www.st.com/en/evaluation-tools/nucleo-l496zg.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L496ZG/stm32-secure-patching-bootloader-README_NUCLEO-L496ZG_v1.3.0) |
 |          | [DISCO-L476G](https://www.st.com/en/evaluation-tools/32l476gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L476G/stm32-secure-patching-bootloader-README_DISCO-L476G_v1.3.0) |
 |          | [DISCO-L496G](https://www.st.com/en/evaluation-tools/32l496gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L496G/stm32-secure-patching-bootloader-README_DISCO-L496G_v1.3.0) |
-| STM32L4+ | [DISCO-L4R9I](https://www.st.com/en/evaluation-tools/32l4r9idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) | [FreeRTOS_LowPower](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) |
+| STM32L4+ | [DISCO-L4R9I](https://www.st.com/en/evaluation-tools/32l4r9idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) | [FreeRTOS_LowPower IAP](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) |
 |          | [B-L4S5I-IOT01A](https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L4S5I-IOT01A/stm32-secure-patching-bootloader-README_B-L4S5I-IOT01A_v1.3.0) |
 | STM32L5  | [DISCO-L562E](https://www.st.com/en/evaluation-tools/stm32l562e-dk.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L562E/stm32-secure-patching-bootloader-README_DISCO-L562E_v1.3.0) |
 | STM32WL  | [LORA-E5-DEV](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/LORA-E5-DEV/stm32-secure-patching-bootloader-README_LORA-E5-DEV_v1.3.0) |
@@ -52,16 +52,30 @@ This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVA
 
 Please post an issue if you'd like a particular board supported.
 
+### IAP Reference Designs
+
+**List of IAP (In-Application Programming) firmware update open source reference designs using the stm32-secure-patching-bootloder.**
+
+These reference designs can be adapted to any board that the stm32-secure-patching-bootloader supports.  Of course, the bootloader itself always has capability for secure YMODEM/UART and/or USB flash drive firmware update even if the application has failed or become unavailable.
+
+| Reference Project | Reference Board | Technique |
+| --- | --- | --- |
+| [FreeRTOS_LowPower IAP](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) | [DISCO-L4R9I](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) | YMODEM/UART interrupt mode |
+| [Web Server IAP Update](https://github.com/firmwaremodules/STM32CubeF4/tree/master/Projects/STM32F429ZI-Nucleo/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS) | [NUCLEO-F429ZI](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) | Ethernet / TCPIP/ multipart forms file upload |
+
+
+
+
 ### Delta Patch Engine
 
 The Delta Patch Engine is built into the bootloader and ready to be accessed by your application at runtime or by the bootloader through UART or USB flash drive updates.  The Delta Patch Engine features:
 
-* Same security as regular full-image .sfb files.  The .sfbp patch container is secured with the same signed header and encrypted.
+* Same security as regular full-image .sfb files.  The .sfbp patch container is secured with the same digital signature and encryption technology.
 * Regenerates the full firmware update image into SLOT1 from the content of the patch and the content of the existing application in SLOT0.  The final result is as-if a full image .sfb update was performed (in fact exactly the same as the SHA256 digest will attest).
 * Performs SHA256 digest check on the source image (SLOT0) and compares to expected digest embedded in the patch container before taking any action.
-* Single-byte streaming update capability.  The patch engine can be fed any number of bytes at a time (including just 1 byte) to support any OTA update method.
+* Single-byte streaming update capability.  The patch engine can be fed any number of bytes at a time (including just 1 byte) to support any IAP / OTA update method.
 * The installation of firmware (copy from SLOT1 to SLOT0) is always handled by the bootloader at startup and only occurs after the regenerated firmware image in SLOT1 has been verified and authenticated and the user application has requested or initiated a reboot.
-* The patching engine API consists of just three functions (Init(), Data(), Finish()) described in one header file and implemented in one object file bound at link time.
+* The patching engine API consists of just two core functions (`SE_PATCH_Init`, `SE_PATCH_Data`) described in one header file and bound at link time through a linker include script.
 
 
 ### TouchGFX
@@ -89,7 +103,7 @@ I will happily generate a made-to-order registered version of the stm32-secure-p
 Please head over to my [store](https://www.firmwaremodules.com/products/stm32-secure-patching-bootloader) to get pricing details.
 [Contact me](mailto:contact@firmwaremodules.com) to get the ball rolling.
 
-Commercial, registered users get an additional **production** version of the bootloader binary that checks and enforces **RDP Level 2**
+Commercial, registered users optionally get an additional **production** version of the bootloader binary that checks and enforces **RDP Level 2**
 to help mitigate chip-level attacks such as [RDP regression](https://www.usenix.org/system/files/conference/woot17/woot17-paper-obermaier.pdf).  Your use of the production version is optional.  When utilized, it will
 automatically set RDP Level 2 and write protect the bootloader flash area at startup.
 
