@@ -46,7 +46,7 @@ This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVA
 | STM32L5  | [DISCO-L562E](https://www.st.com/en/evaluation-tools/stm32l562e-dk.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L562E/stm32-secure-patching-bootloader-README_DISCO-L562E_v1.3.0) |
 | STM32WL  | [LORA-E5-DEV](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/LORA-E5-DEV/stm32-secure-patching-bootloader-README_LORA-E5-DEV_v1.3.0) |
 |          | [LORA-E5-MINI](https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869)  (use DEV libs) |
-| STM32F4  | [NUCLEO-F429ZI](https://www.st.com/en/evaluation-tools/nucleo-f429zi.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) |
+| STM32F4  | [NUCLEO-F429ZI](https://www.st.com/en/evaluation-tools/nucleo-f429zi.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) | [Web Server IAP Update](https://github.com/firmwaremodules/STM32CubeF4/tree/master/Projects/STM32F429ZI-Nucleo/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS)
 | STM32F7  | [DISCO-F769I](https://www.st.com/en/evaluation-tools/32f769idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-F769I/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) |
 
 
