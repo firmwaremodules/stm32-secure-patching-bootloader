@@ -1,5 +1,7 @@
 ## STM32 Secure Patching Bootloader
 
+*Don't forget to check out our [v1.4 preview](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/tree/v1.4-preview) branch with support for awesome new boards like the G0 and G4 series*
+
 A Secure Patching Bootloader and Firmware Update System for all **STM32** MCUs.
 
 The only bootloader and firmware update system you may ever need.  Works with almost any STM32 MCU family using the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) development environment.
