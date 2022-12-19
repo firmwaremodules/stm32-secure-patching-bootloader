@@ -4,7 +4,7 @@
 
 
 * `postbuild.sh` is called by the application project as its postbuild step.  Please see the file for argument usage and the [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for usage examples.
-* `make_keys.bat` creates random unique AES and ECDSA keys for use by postbuild.sh.  They keys must be unique to each application using this system.  Keys are typically placed in the application project's `Keys` directory.  See [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for examples.
+* `make_keys_v7m.bat` and `make_keys_v6m.bat` creates random unique AES and ECDSA keys for use by postbuild.sh.  They keys must be unique to each application using this system.  Keys are typically placed in the application project's `Keys` directory.  See [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for examples.  Use the `v6m` script for Cortex-M0 targets like the NUCLEO-G0B1RE. Use the `v7m` script for all other targets.
 
 
 ## Key Management
@@ -33,5 +33,5 @@ Open a console window to `Tools` and run these commands:
 5. Add and/or commit changes to these 2 files into the project's `Keys` directory.
 
 Also, in `Keys` directory, `machine.txt` must exist, and must contain either `V7M` for a non-Cortex-M0 target,
-or `V6M` for a Cortex-M0 target.  Again, see the [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for examples on `Keys` directory setup.
+or `V6M` for a Cortex-M0 target. This file is automatically created when the `make_keys_xxx.bat` script is run.  Again, see the [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for examples on `Keys` directory setup.
 
