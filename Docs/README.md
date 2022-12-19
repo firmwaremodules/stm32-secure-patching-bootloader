@@ -64,7 +64,7 @@ At minimum we need to tell the linker where your application's new start offset 
 It defines some symbols that we may need, minimally it is `STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_START`.  Then your application's interrupt vector table has to be offset from this by the minimum size of your vector table (to account for the image header), also defined as `VECTOR_SIZE` in the linker configuration file.
 
 ```
-/* For this example end of RAM on STM32L073 is 0x20005000 = 20 KB*/
+/* For this example end of RAM on STM32L073 is STM32_SECURE_PATCHING_BOOTLOADER_RAM_TOP = 0x20005000 = 20 KB*/
 
 INCLUDE stm32-secure-patching-bootloader-linker-gcc_NUCLEO-L073RZ_v1.3.0.ld
 
@@ -72,7 +72,7 @@ APPLI_region_intvec_start__  = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_START + VE
 APPLI_region_ROM_start    = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_START  + VECTOR_SIZE + VECTOR_SIZE;
 APPLI_region_ROM_length   = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_END - APPLI_region_ROM_start + 1;
 APPLI_region_RAM_start    = STM32_SECURE_PATCHING_BOOTLOADER_RAM_START;
-APPLI_region_RAM_length    = 0x20005000 - APPLI_region_RAM_start;
+APPLI_region_RAM_length    = STM32_SECURE_PATCHING_BOOTLOADER_RAM_TOP - APPLI_region_RAM_start;
 
 MEMORY
 {
@@ -105,14 +105,14 @@ A multi-target generic linker script that works with most STM32 targets is provi
 For a TouchGFx multi-segment application (assets on external QSPI or OSPI flash), use this template:
 
 ```
-/* For this example end of RAM on STM32L4R9I is 0x200A0000 = 640 KB*/ 
+/* For this example end of RAM on STM32L4R9I is STM32_SECURE_PATCHING_BOOTLOADER_RAM_TOP = 0x200A0000 = 640 KB*/ 
 INCLUDE stm32-secure-patching-bootloader-linker-gcc_DISCO-L4R9I_v1.3.0.ld 
 
 APPLI_region_intvec_start__  = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_START + VECTOR_SIZE; 
 APPLI_region_ROM_start    = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_START  + VECTOR_SIZE + VECTOR_SIZE; 
 APPLI_region_ROM_length   = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_END - APPLI_region_ROM_start + 1; 
 APPLI_region_RAM_start    = STM32_SECURE_PATCHING_BOOTLOADER_RAM_START; 
-APPLI_region_RAM_length    = 0x200A0000 - APPLI_region_RAM_start; 
+APPLI_region_RAM_length    = STM32_SECURE_PATCHING_BOOTLOADER_RAM_TOP - APPLI_region_RAM_start; 
 
 MEMORY 
 { 
@@ -172,18 +172,19 @@ void SystemInit(void)
 Use the make_keys.bat script under Scripts to call a Python tool to generate the AES encryption key (firmware confidentiality) and the ECDSA public verification and private signing keys (firmware authenticity).   Example on Windows systems to place keys in a Keys directory: 
 
 ```
-c:\stm32-secure-patching-bootloader-demoapp\Bootloader\Scripts>make_keys.bat ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys 
+c:\stm32-secure-patching-bootloader-demoapp\Bootloader\Scripts>make_keys_v7m.bat ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys 
 
 make_keys.bat : Generate new secure keys for stm32-secure-patching-bootloader 
 Making ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys/Cipher_Key_AES_CBC.bin 
 Making ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys/Signing_PrivKey_ECC.txt 
+Making ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys/machine.txt 
 ```
 
 Run `make_keys <path to directory to contain key files>`
 
 If you're not using Windows, then all you need to do is look inside make_keys.bat and run the Python scripts directly.  The Keys directory is referenced by the postbuild.sh post-build command line in the IDE.  This directory can be anywhere and called anything by adjusting the post-build command line. 
 
-Ensure there is a file called `machine.txt` in the `Keys` dir.  Add one line to it: `V7M` for all targets unless you're using a cortex-M0, then add `V6M` instead. `make_keys.bat` may have already created this file.
+Ensure there is a file called `machine.txt` in the `Keys` dir.  Add one line to it: `V7M` for all targets unless you're using a cortex-M0, then add `V6M` instead. `make_keys_xxx.bat` will have already created this file.
 
 **Important Note**
 
