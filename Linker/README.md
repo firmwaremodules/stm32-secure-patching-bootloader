@@ -23,14 +23,14 @@ _estack = 0x20005000;    /* end of RAM specific to the device. */
 _Min_Heap_Size = 0x200;      /* required amount of heap  */
 _Min_Stack_Size = 0x400;     /* required amount of stack */
 
-INCLUDE stm32-secure-patching-bootloader-linker-gcc_<version>_<target>.ld
+INCLUDE stm32-secure-patching-bootloader-linker-gcc_<target>_<version>.ld
 
 /* Specific ROM/RAM UserApp definition */
 APPLI_region_intvec_start__  = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_START + 0x200; /* Cortex-M7: 0x400, others: 0x200 */
 APPLI_region_ROM_start    = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_START  + VECTOR_SIZE + 0x200; /* Cortex-M7: 0x400, others: 0x200 */
 APPLI_region_ROM_length   = STM32_SECURE_PATCHING_BOOTLOADER_SLOT0_END - APPLI_region_ROM_start + 1;
 APPLI_region_RAM_start    = STM32_SECURE_PATCHING_BOOTLOADER_RAM_START;
-APPLI_region_RAM_length    = 0x20005000 - APPLI_region_RAM_start;
+APPLI_region_RAM_length    = _estack - APPLI_region_RAM_start;
 
 /* Specify the memory areas */
 MEMORY
@@ -38,7 +38,6 @@ MEMORY
  ISR_VECTOR (rx)   : ORIGIN = APPLI_region_intvec_start__, LENGTH = VECTOR_SIZE
  APPLI_region_ROM  : ORIGIN = APPLI_region_ROM_start, LENGTH = APPLI_region_ROM_length
  APPLI_region_RAM  : ORIGIN = APPLI_region_RAM_start, LENGTH = APPLI_region_RAM_length
- QSPI (rx)         : ORIGIN = APPLI_region_MULTISEG_start__, LENGTH = 64M
 }
 
 /* Include the SECTIONS (not target-specific) */

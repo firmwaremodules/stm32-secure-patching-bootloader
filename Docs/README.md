@@ -3,7 +3,7 @@
 ## Documentation Overview
 
 * [Graphic](stm32-secure-patching-bootloader-MultiSegment_rev1_Dec2021.pdf) describing MultiSegment feature in more detail.
-* [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev3_Nov2022.pdf) in PDF form with screenshots.
+* [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev4_Mar2023.pdf) in PDF form with screenshots.
 
 ## Quick Start Guide
 
@@ -16,7 +16,7 @@ Integrating the stm32-secure-patching-bootloader is a simple five step process:
 
 Please refer to [stm32-secure-patching-bootloader-demoapp](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) repository for working projects already implementing these steps or to the STM32 Cube repositories we maintain that has the bootloader integrated with select reference projects at [here](https://github.com/orgs/firmwaremodules/repositories).
 
-Also refer to this [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev3_Nov2022.pdf) PDF document for more details including images and screenshots.
+Also refer to this [Quick Start Guide](stm32-secure-patching-bootloader-QSG_rev4_Mar2023.pdf) PDF document for more details including images and screenshots.
 
 1. Adding bootloader files to your project repository
 
@@ -169,21 +169,22 @@ void SystemInit(void)
 
 5. Generating your project's encryption and signing keys and machine.txt file.
 
-Use the make_keys.bat script under Scripts to call a Python tool to generate the AES encryption key (firmware confidentiality) and the ECDSA public verification and private signing keys (firmware authenticity).   Example on Windows systems to place keys in a Keys directory: 
+Use the make_keys_v7m.bat script (for L0, F0, G0 targets use make_keys_v6m.bat) under Scripts to call a Python tool to generate the AES encryption key (firmware confidentiality) and the ECDSA public verification and private signing keys (firmware authenticity).   Example on Windows systems to place keys in a Keys directory: 
 
 ```
-c:\stm32-secure-patching-bootloader-demoapp\Bootloader\Scripts>make_keys.bat ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys 
+c:\stm32-secure-patching-bootloader-demoapp\Bootloader\Scripts>make_keys_v7m.bat ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys 
 
-make_keys.bat : Generate new secure keys for stm32-secure-patching-bootloader 
+make_keys_v7m.bat : Generate new secure keys for stm32-secure-patching-bootloader 
 Making ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys/Cipher_Key_AES_CBC.bin 
 Making ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys/Signing_PrivKey_ECC.txt 
+Making ..\..\App\Project\DemoApp\DISCO-F769I\STM32CubeIDE\Keys/machine.txt
 ```
 
-Run `make_keys <path to directory to contain key files>`
+Run `make_keys_v7m <path to directory to contain key files>`
 
-If you're not using Windows, then all you need to do is look inside make_keys.bat and run the Python scripts directly.  The Keys directory is referenced by the postbuild.sh post-build command line in the IDE.  This directory can be anywhere and called anything by adjusting the post-build command line. 
+If you're not using Windows, then all you need to do is look inside make_keys_v7m.bat and run the Python scripts directly.  The Keys directory is referenced by the postbuild.sh post-build command line in the IDE.  This directory can be anywhere and called anything by adjusting the post-build command line. 
 
-Ensure there is a file called `machine.txt` in the `Keys` dir.  Add one line to it: `V7M` for all targets unless you're using a cortex-M0, then add `V6M` instead. `make_keys.bat` may have already created this file.
+Ensure there is a file called `machine.txt` in the `Keys` dir.  Add one line to it: `V7M` for all targets unless you're using a cortex-M0, then add `V6M` instead. `make_keys_vXm.bat` will have already created this file.
 
 **Important Note**
 

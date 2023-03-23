@@ -1,7 +1,5 @@
 ## STM32 Secure Patching Bootloader
 
-*Don't forget to check out our [v1.4 preview](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/tree/v1.4-preview) branch with support for awesome new boards like the G0 and G4 series and the Nucleo-WL55*
-
 A Secure Patching Bootloader and Firmware Update System for all **STM32** MCUs.
 
 The only bootloader and firmware update system you may ever need.  Works with almost any STM32 MCU family using the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) development environment.
@@ -20,7 +18,7 @@ This unique solution is an easy way to get a secure and robust bootloader that o
 * Useful progress messages printed to UART.
 * Can deploy and update TouchGFX applications.
 
-This secure patching bootloader and firmware update system is Apache and MIT licensed and free to use on any NUCLEO, DISCO or EVAL board we support here. If your NUCLEO, DISCO or EVAL board is missing, post an issue and we'll add it.
+This secure patching bootloader and firmware update system is licensed according to STMicroelectronics' Ultimate Liberty Software License Agreement (see [LICENSE](LICENSE.md)) and free to use on any NUCLEO, DISCO or EVAL board we support here. If your NUCLEO, DISCO or EVAL board is missing, post an issue and we'll add it.
 
 The stm32-secure-patching-bootloader reserves between **40 - 80 KB** at the beginning of internal flash, depending on MCU and feature selected (support for USB flash loader, external flash / multisegment add to size).
 The bootloader also reserves about **5 KB** at the start of SRAM for the secure patching engine's stack and state, fully indepdenent of the application.  This allows the application to perform in-application firmware updates and make other runtime requests of the bootloader (get firmware version, etc).
@@ -37,20 +35,25 @@ This list will grow over time as we work to support key STM32 NUCLEO, DISCO, EVA
 
 | Family | Boards | Board Config | Reference Projects |
 | --- | --- | --- | --- |
-| STM32L0  | [NUCLEO-L073RZ](https://www.st.com/en/evaluation-tools/nucleo-l073rz.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L073RZ/stm32-secure-patching-bootloader-README_NUCLEO-L073RZ_v1.3.0) |
-|          | [B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L072Z-LRWAN1/stm32-secure-patching-bootloader-README_B-L072Z-LRWAN1_v1.3.0) |
-| STM32L4  | [NUCLEO-L412KB](https://www.st.com/en/evaluation-tools/nucleo-l412kb.html) |[README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L412KB/stm32-secure-patching-bootloader-README_NUCLEO-L412KB_v1.3.0) |
-|          | [NUCLEO-L452RE](https://www.st.com/en/evaluation-tools/nucleo-l452re.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L452RE/stm32-secure-patching-bootloader-README_NUCLEO-L452RE_v1.3.0) |
-|          | [NUCLEO-L496ZG](https://www.st.com/en/evaluation-tools/nucleo-l496zg.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L496ZG/stm32-secure-patching-bootloader-README_NUCLEO-L496ZG_v1.3.0) |
-|          | [DISCO-L476G](https://www.st.com/en/evaluation-tools/32l476gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L476G/stm32-secure-patching-bootloader-README_DISCO-L476G_v1.3.0) |
-|          | [DISCO-L496G](https://www.st.com/en/evaluation-tools/32l496gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L496G/stm32-secure-patching-bootloader-README_DISCO-L496G_v1.3.0) |
-| STM32L4+ | [DISCO-L4R9I](https://www.st.com/en/evaluation-tools/32l4r9idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) | [FreeRTOS_LowPower IAP](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) |
-|          | [B-L4S5I-IOT01A](https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L4S5I-IOT01A/stm32-secure-patching-bootloader-README_B-L4S5I-IOT01A_v1.3.0) |
-| STM32L5  | [DISCO-L562E](https://www.st.com/en/evaluation-tools/stm32l562e-dk.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L562E/stm32-secure-patching-bootloader-README_DISCO-L562E_v1.3.0) |
-| STM32WL  | [LORA-E5-DEV](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/LORA-E5-DEV/stm32-secure-patching-bootloader-README_LORA-E5-DEV_v1.3.0) |
+| STM32G0  | [NUCLEO-G0B1RE](https://www.st.com/en/evaluation-tools/nucleo-g0b1re.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-G0B1RE/stm32-secure-patching-bootloader-README_NUCLEO-G0B1RE_v1.4.0) |
+| STM32L0  | [NUCLEO-L073RZ](https://www.st.com/en/evaluation-tools/nucleo-l073rz.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L073RZ/stm32-secure-patching-bootloader-README_NUCLEO-L073RZ_v1.4.0) |
+|          | [B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L072Z-LRWAN1/stm32-secure-patching-bootloader-README_B-L072Z-LRWAN1_v1.4.0) |
+| STM32L4  | [NUCLEO-L412KB](https://www.st.com/en/evaluation-tools/nucleo-l412kb.html) |[README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L412KB/stm32-secure-patching-bootloader-README_NUCLEO-L412KB_v1.4.0) |
+|          | [NUCLEO-L452RE](https://www.st.com/en/evaluation-tools/nucleo-l452re.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L452RE/stm32-secure-patching-bootloader-README_NUCLEO-L452RE_v1.4.0) |
+|          | [NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L476RG/stm32-secure-patching-bootloader-README_NUCLEO-L476RG_v1.4.0) |
+|          | [NUCLEO-L496ZG](https://www.st.com/en/evaluation-tools/nucleo-l496zg.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-L496ZG/stm32-secure-patching-bootloader-README_NUCLEO-L496ZG_v1.4.0) |
+|          | [DISCO-L476G](https://www.st.com/en/evaluation-tools/32l476gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L476G/stm32-secure-patching-bootloader-README_DISCO-L476G_v1.4.0) |
+|          | [DISCO-L496G](https://www.st.com/en/evaluation-tools/32l496gdiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L496G/stm32-secure-patching-bootloader-README_DISCO-L496G_v1.4.0) |
+| STM32L4+ | [DISCO-L4R9I](https://www.st.com/en/evaluation-tools/32l4r9idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.4.0) | [FreeRTOS_LowPower IAP](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) |
+|          | [B-L4S5I-IOT01A](https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/B-L4S5I-IOT01A/stm32-secure-patching-bootloader-README_B-L4S5I-IOT01A_v1.4.0) |
+| STM32L5  | [DISCO-L562E](https://www.st.com/en/evaluation-tools/stm32l562e-dk.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L562E/stm32-secure-patching-bootloader-README_DISCO-L562E_v1.4.0) |
+| STM32WL  | [NUCLEO-WL55JC](https://www.st.com/en/evaluation-tools/nucleo-wl55jc.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-WL55JC/stm32-secure-patching-bootloader-README_NUCLEO-WL55JC_v1.4.0) |
+|          | [LORA-E5-DEV](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/LORA-E5-DEV/stm32-secure-patching-bootloader-README_LORA-E5-DEV_v1.4.0) |
 |          | [LORA-E5-MINI](https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869)  (use DEV libs) |
-| STM32F4  | [NUCLEO-F429ZI](https://www.st.com/en/evaluation-tools/nucleo-f429zi.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) | [Web Server IAP Update](https://github.com/firmwaremodules/STM32CubeF4/tree/master/Projects/STM32F429ZI-Nucleo/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS)
-| STM32F7  | [DISCO-F769I](https://www.st.com/en/evaluation-tools/32f769idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-F769I/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) |
+| STM32F4  | [NUCLEO-F429ZI](https://www.st.com/en/evaluation-tools/nucleo-f429zi.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.4.0) | [Web Server IAP Update](https://github.com/firmwaremodules/STM32CubeF4/tree/master/Projects/STM32F429ZI-Nucleo/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS)
+|          | [DISCO-F469I](https://www.st.com/en/evaluation-tools/32f469idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-F469I/stm32-secure-patching-bootloader-README_DISCO-F469I_v1.4.0) |
+| STM32F7  | [DISCO-F769I](https://www.st.com/en/evaluation-tools/32f769idiscovery.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-F769I/stm32-secure-patching-bootloader-README_DISCO-F769I_v1.4.0) |
+| STM32H7  | [DISCO-H745I](https://www.st.com/en/evaluation-tools/stm32h745i-disco.html) | [README](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-H745I/stm32-secure-patching-bootloader-README_DISCO-H745I_v1.4.0) |
 
 
 Please post an issue if you'd like a particular board supported.
@@ -63,8 +66,8 @@ These reference designs can be adapted to any board that the stm32-secure-patchi
 
 | Reference Project | Reference Board | Technique |
 | --- | --- | --- |
-| [FreeRTOS_LowPower IAP](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) | [DISCO-L4R9I](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.3.0) | YMODEM/UART interrupt mode |
-| [Web Server IAP Update](https://github.com/firmwaremodules/STM32CubeF4/tree/master/Projects/STM32F429ZI-Nucleo/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS) | [NUCLEO-F429ZI](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.3.0) | Ethernet / TCPIP/ multipart forms file upload |
+| [FreeRTOS_LowPower IAP](https://github.com/firmwaremodules/STM32CubeL4/tree/master/Projects/32L4R9IDISCOVERY/Applications/FreeRTOS/FreeRTOS_LowPower) | [DISCO-L4R9I](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/DISCO-L4R9I/stm32-secure-patching-bootloader-README_DISCO-L4R9I_v1.4.0) | YMODEM/UART interrupt mode |
+| [Web Server IAP Update](https://github.com/firmwaremodules/STM32CubeF4/tree/master/Projects/STM32F429ZI-Nucleo/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS) | [NUCLEO-F429ZI](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/main/Libs/NUCLEO-F429ZI/stm32-secure-patching-bootloader-README_NUCLEO-F429ZI_v1.4.0) | Ethernet / TCPIP/ multipart forms file upload |
 
 
 
@@ -111,6 +114,17 @@ to help mitigate chip-level attacks such as [RDP regression](https://www.usenix.
 automatically set RDP Level 2 and write protect the bootloader flash area at startup.
 
 ### Release Notes
+
+**v1.4.0 - Mar 2023**
+
+* Add support for new platforms and boards: G0 (NUCLEO-G0B1RE) H7 (DISCO-H745I) WL (NUCLEO-WL55JC) F4 (DISCO-F469I) L4 (NUCLEO-L476RG) 
+* Prints size of binaries detected in each slot in diagnostic output.
+* Bootloader disables cache before launching application on all boards that use cache (prevents faulting when application tries to re-enable already enabled cache in some cases).
+* Fixes YMODEM load button trigger wrong state for NULEO-L452RE.
+* Optimization: greatly speeds up patching updates (3x or more) on large binaries utilizing external flash.
+* Optimization: removes one redundant header verification in virgin device or two redundant header verifications in devices that have undergone at least one update cycle.  Saves between 50 - 2000 ms per header verification of bootup time depending on MCU capability.
+* Ensures hardware CRC is powered up when needed during SE_PATCH_Data() API calls.
+* Adds make_keys_vXm.bat scripts to automatically generate machine.txt file (often overlooked otherwise).
 
 **v1.3.0 - Nov 2022**
 

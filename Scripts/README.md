@@ -4,8 +4,9 @@
 
 
 * `postbuild.sh` is called by the application project as its postbuild step.  Please see the file for argument usage and the [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for usage examples.
-* `make_keys.bat` creates random unique AES and ECDSA keys for use by postbuild.sh.  They keys must be unique to each application using this system.  Keys are typically placed in the application project's `Keys` directory.  See [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for examples.
+* `make_keys_v6m.bat` or `make_keys_v7m.bat` creates random unique AES and ECDSA keys for use by postbuild.sh.  They keys must be unique to each application using this system.  Keys are typically placed in the application project's `Keys` directory.  See [demoapp repository](https://github.com/firmwaremodules/stm32-secure-patching-bootloader-demoapp) for examples.
 
+Note: use `v6m` only for Cortex-M0+ targets like STM32L0, F0 or G0.  For all other targets use `v7m` variant.
 
 ## Key Management
 
@@ -23,7 +24,7 @@ These keys must be unique to each project to prevent loading wrong firmware.
 Do not use the same keys for multiple projects/products or the stm32-secure-patching-bootloader in one product could
 update to firmware meant for another product.
 
-Use the 'make_keys.bat' convenience script located in `Scripts` to generate the keys
+Use the 'make_keys_v7m.bat' convenience script located in `Scripts` to generate the keys
 automatically in the specified project `Keys` directory, or follow these manual steps:
 
 Open a console window to `Tools` and run these commands:
