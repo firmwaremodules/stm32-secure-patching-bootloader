@@ -1,6 +1,6 @@
 ## STM32 Secure Patching Bootloader
 
-*Don't forget to check out our [v1.4 preview](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/tree/v1.4-preview) branch with support for awesome new boards like the G0 and G4 series*
+*Don't forget to check out our [v1.4 preview](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/tree/v1.4-preview) branch with support for awesome new boards like the G0 and G4 series and the Nucleo-WL55*
 
 A Secure Patching Bootloader and Firmware Update System for all **STM32** MCUs.
 
@@ -25,10 +25,11 @@ This secure patching bootloader and firmware update system is Apache and MIT lic
 The stm32-secure-patching-bootloader reserves between **40 - 80 KB** at the beginning of internal flash, depending on MCU and feature selected (support for USB flash loader, external flash / multisegment add to size).
 The bootloader also reserves about **5 KB** at the start of SRAM for the secure patching engine's stack and state, fully indepdenent of the application.  This allows the application to perform in-application firmware updates and make other runtime requests of the bootloader (get firmware version, etc).
 
+Check out the **FAQ** [here](https://github.com/firmwaremodules/stm32-secure-patching-bootloader/wiki#faq) in the wiki.
+
 ### Quick Start Guide
 
 Refer to details in [Product Documentation](Docs/README.md).
-
 
 ### Supported Boards
 
