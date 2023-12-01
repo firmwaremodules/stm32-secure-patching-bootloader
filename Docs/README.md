@@ -216,7 +216,7 @@ Update binaries are for distribution to customers or to your apps and cloud serv
   2. Secured in-field firmware full update file: `DemoApp_NUCLEO-L073RZ_v1.0.0.sfb` (full image) 
   3. Secured in-field firmware patch update file: `DemoApp_NUCLEO-L073RZ_v1.0.0_v1.1.0.sfbp` (patch - produced only if reference version v1.0.0 exists in `Binary\PatchRef`)
 
-Note: the `<version>` appended to the file names is a direct copy of either the post-build command-line's 'to' version, or else of the output of `git decribe --tags --always --dirty` if the 'to' version is in auto mode '0.0.0' or '0'.  When using the auto mode (recommended), use git tagging to set the version.  A semantic version tag may be prepended with a 'v' or not.  Firmware Modules projects like to prepend versions with a 'v', so a tag might be 'v1.3.1'.  Either way works. 
+Note: the `<version>` appended to the file names is a direct copy of either the post-build command-line's 'to' version, or else of the output of `git describe --tags --always --dirty` if the 'to' version is in auto mode '0.0.0' or '0'.  When using the auto mode (recommended), use git tagging to set the version.  A semantic version tag may be prepended with a 'v' or not.  Firmware Modules projects like to prepend versions with a 'v', so a tag might be 'v1.3.1'.  Either way works. 
 
 Also note: the firmware image header contains a 4-byte field for version and therefore cannot directly accommodate a non-semantic version such as v1.3.1-7-gc32667a that may arise during development load testing.  The version generator embedded into the postbuild.sh script can safely handle this scenario by adding the *number of commits since* value to the build number, so v1.3.1-7 becomes 1.3.8 in the header. 
 
